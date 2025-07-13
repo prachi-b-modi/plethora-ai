@@ -1,0 +1,8 @@
+.env
+__pycache__/
+lib/
+.DS_Store
+# Add at the end of the file
+# Local data storage
+data/
+memories.json

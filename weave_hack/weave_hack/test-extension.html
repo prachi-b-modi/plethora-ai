@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Extension</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        .test-section {
+            margin: 20px 0;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .status {
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 3px;
+        }
+        .success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        code {
+            background: #f4f4f4;
+            padding: 2px 4px;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Chrome Extension Test Page</h1>
+    
+    <div class="test-section">
+        <h2>Extension Status</h2>
+        <div id="extension-status" class="status">Checking extension...</div>
+    </div>
+
+    <div class="test-section">
+        <h2>Testing Instructions</h2>
+        <ol>
+            <li><strong>Reload the Extension:</strong>
+                <ul>
+                    <li>Go to <code>chrome://extensions/</code></li>
+                    <li>Find "Dynamic Script Runner"</li>
+                    <li>Click the reload button (circular arrow)</li>
+                </ul>
+            </li>
+            <li><strong>Check Console:</strong>
+                <ul>
+                    <li>Open DevTools (F12)</li>
+                    <li>Look for <code>[Content Script] Dynamic Script Runner loaded</code></li>
+                    <li>You should see "DSR Active" indicator briefly in bottom-left</li>
+                </ul>
+            </li>
+            <li><strong>Test Sidebar:</strong>
+                <ul>
+                    <li>Click the extension icon in toolbar</li>
+                    <li>Sidebar should slide in from the right</li>
+                    <li>Click again to hide it</li>
+                </ul>
+            </li>
+        </ol>
+    </div>
+
+    <div class="test-section">
+        <h2>Console Output</h2>
+        <pre id="console-output" style="background: #f4f4f4; padding: 10px; overflow-x: auto;"></pre>
+    </div>
+
+    <div class="test-section">
+        <h2>Userscript Test Links</h2>
+        <ul>
+            <li><a href="https://example.com" target="_blank">Test Hello Example userscript</a> - Should show green notification</li>
+            <li><a href="https://github.com" target="_blank">Test GitHub Enhancer userscript</a> - Should add copy buttons to code blocks</li>
+        </ul>
+    </div>
+
+    <script>
+        // Check if extension is loaded
+        const statusEl = document.getElementById('extension-status');
+        const consoleEl = document.getElementById('console-output');
+        
+        // Capture console logs
+        const originalLog = console.log;
+        const logs = [];
+        console.log = function(...args) {
+            originalLog.apply(console, args);
+            const message = args.map(arg => 
+                typeof arg === 'object' ? JSON.stringify(arg, null, 2) : String(arg)
+            ).join(' ');
+            logs.push(message);
+            consoleEl.textContent = logs.join('\n');
+        };
+        
+        // Check for extension
+        setTimeout(() => {
+            const indicator = document.querySelector('#dsr-sidebar');
+            const debugIndicator = document.querySelector('div[style*="DSR Active"]');
+            
+            if (indicator || debugIndicator || logs.some(log => log.includes('[Content Script]'))) {
+                statusEl.className = 'status success';
+                statusEl.textContent = '✓ Extension is loaded and content script is active';
+            } else {
+                statusEl.className = 'status error';
+                statusEl.textContent = '✗ Extension not detected. Please reload the extension and refresh this page.';
+            }
+        }, 1000);
+    </script>
+</body>
+</html> 

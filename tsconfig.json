@@ -1,0 +1,44 @@
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "module": "commonjs",
+    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+    "jsx": "react",
+    "outDir": "./dist",
+    "rootDir": "./",
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,
+    "moduleResolution": "node",
+    "allowSyntheticDefaultImports": true,
+    "declaration": false,
+    "declarationMap": false,
+    "sourceMap": true,
+    "noEmit": true,
+    "isolatedModules": true,
+    "allowJs": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["extension/*"],
+      "@/background/*": ["extension/background/*"],
+      "@/content/*": ["extension/content/*"],
+      "@/sidebar/*": ["extension/sidebar/*"],
+      "@/shared/*": ["extension/shared/*"],
+      "@/types/*": ["extension/shared/types/*"],
+      "@/utils/*": ["extension/shared/utils/*"]
+    },
+    "types": ["chrome", "node", "jest"]
+  },
+  "include": [
+    "extension/**/*",
+    "tests/**/*"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist",
+    "extension/sidebar/node_modules",
+    "extension/sidebar/.next"
+  ]
+} 

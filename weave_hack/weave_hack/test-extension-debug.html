@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Extension Debug Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .info {
+            background: #f0f0f0;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+        code {
+            background: #e0e0e0;
+            padding: 2px 5px;
+            border-radius: 3px;
+        }
+        .error {
+            color: red;
+        }
+        .success {
+            color: green;
+        }
+    </style>
+</head>
+<body>
+    <h1>Extension Debug Page</h1>
+    
+    <div class="info">
+        <h2>Instructions:</h2>
+        <ol>
+            <li>Open Chrome DevTools (F12)</li>
+            <li>Click on the extension icon to open the sidebar</li>
+            <li>Check the Console tab for any errors</li>
+            <li>Try clicking the "📸 Save Page" button</li>
+            <li>Look for error messages in:
+                <ul>
+                    <li>Main page console</li>
+                    <li>Extension popup console (right-click extension icon → Inspect popup)</li>
+                    <li>Background service worker (chrome://extensions → your extension → "service worker" link)</li>
+                </ul>
+            </li>
+        </ol>
+    </div>
+
+    <div class="info">
+        <h2>Common Issues:</h2>
+        <ul>
+            <li><strong>CORS errors:</strong> Backend needs to allow requests from chrome-extension:// origins</li>
+            <li><strong>Permissions:</strong> Extension needs tabs, activeTab permissions</li>
+            <li><strong>Service worker not updating:</strong> Click reload button in chrome://extensions</li>
+        </ul>
+    </div>
+
+    <div class="info">
+        <h2>Quick Backend Test:</h2>
+        <button onclick="testBackend()">Test Backend Directly</button>
+        <div id="backendResult"></div>
+    </div>
+
+    <script>
+        async function testBackend() {
+            const resultDiv = document.getElementById('backendResult');
+            resultDiv.innerHTML = 'Testing...';
+            
+            try {
+                const response = await fetch('http://localhost:8000/save_page', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        url: window.location.href,
+                        title: document.title,
+                        screenshot: 'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg=='
+                    })
+                });
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    resultDiv.innerHTML = '<span class="success">✅ Backend is working!</span><br><pre>' + JSON.stringify(data, null, 2) + '</pre>';
+                } else {
+                    resultDiv.innerHTML = '<span class="error">❌ Backend error: ' + response.status + '</span>';
+                }
+            } catch (error) {
+                resultDiv.innerHTML = '<span class="error">❌ Failed to connect: ' + error.message + '</span>';
+            }
+        }
+    </script>
+</body>
+</html> 

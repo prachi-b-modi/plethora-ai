@@ -1,0 +1,14 @@
+dist/
+node_modules/
+.env
+mcp_screenshots/
+
+.env.local
+env.example
+screenshot*
+Screenshot*
+
+extension/sidebar/*.next
+
+*.mp4
+*.mov

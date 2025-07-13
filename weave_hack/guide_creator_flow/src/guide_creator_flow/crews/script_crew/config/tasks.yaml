@@ -1,0 +1,65 @@
+generate_javascript:
+  description: >
+    Generate JavaScript code based on the user's description: {description}
+    
+    If browser context is provided (URL, page title, DOM elements), use it to create more targeted,
+    page-specific JavaScript that can interact with existing elements on the page.
+    
+    IMPORTANT - The code must be CSP (Content Security Policy) friendly to work in modern browsers:
+    
+    REQUIRED CODE STYLE:
+    1. Use ONLY direct DOM property assignments (NO innerHTML with dynamic content)
+    2. Use addEventListener() instead of inline event handlers (NO onclick attributes)
+    3. Use document.querySelector() or document.getElementById() to find existing elements
+    4. Keep code simple and direct like this example:
+       document.body.style.backgroundColor = 'red';
+       console.log('Background changed to red!');
+    5. Use document.createElement() and appendChild() for new elements
+    6. Set styles using element.style.propertyName = 'value'
+    7. NO complex template strings in innerHTML
+    8. NO eval() or similar dynamic code execution
+    9. Use textContent instead of innerHTML for text content
+    
+    WHEN BROWSER CONTEXT IS AVAILABLE:
+    - Use specific selectors from the available DOM elements
+    - Consider the current page URL and title for contextual actions
+    - Work with existing page elements when possible
+    - Create overlays that complement the current page design
+    
+    The code should:
+    - Be pure vanilla JavaScript (no external dependencies)
+    - Work immediately when pasted into a browser console
+    - Include helpful console.log messages showing what it's doing
+    - Use modern ES6+ syntax where appropriate
+    - Be wrapped in an IIFE to avoid global scope pollution: (function() { ... })();
+    - For overlays: use fixed positioning and high z-index
+    - Always include a way to close/remove any created elements using addEventListener
+    - Include proper error handling with try/catch
+    
+    EXAMPLE STYLE (follow this pattern):
+    (function() {
+        try {
+            // Simple, direct DOM manipulation
+            const element = document.createElement('div');
+            element.style.position = 'fixed';
+            element.style.top = '20px';
+            element.style.right = '20px';
+            element.textContent = 'Hello World';
+            document.body.appendChild(element);
+            console.log('Element created successfully');
+            
+            // Example: working with existing page elements
+            const existingButton = document.querySelector('[aria-label="Gmail"]');
+            if (existingButton) {
+                console.log('Found Gmail button, can interact with it');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    })();
+    
+  expected_output: >
+    Only output the raw JavaScript code without any markdown formatting, explanations, or additional text.
+    The code should be ready to copy and paste directly into a browser console and work without CSP violations.
+    If browser context was provided, the code should be tailored to work with the specific page.
+  agent: javascript_developer 

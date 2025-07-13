@@ -1,0 +1,53 @@
+web_search_task:
+  description: >
+    Use the Exa Web Search tool to find the most relevant and recent information about: {query}
+    
+    Your task is to:
+    1. Perform a comprehensive web search using the query provided
+    2. Analyze the search results to identify the most relevant and authoritative sources
+    3. Extract key information, insights, and data points from the search results
+    4. Organize the findings in a structured format for further analysis
+    
+    Focus on finding recent, high-quality sources that directly relate to the query.
+    Pay attention to:
+    - Publication dates (prefer recent content)
+    - Source credibility and authority  
+    - Relevance to the specific query
+    - Key insights and important details
+    
+  expected_output: >
+    A structured research report containing:
+    - Summary of search approach used
+    - List of key sources found with titles, URLs, and publication dates
+    - Main findings and insights extracted from each source
+    - Important data points, statistics, or facts discovered
+    - Any notable trends or patterns identified
+    - Assessment of source quality and reliability
+    
+  agent: search_researcher
+
+create_summary:
+  description: >
+    Create a direct, concise answer to the user's question about: {query}
+    
+    Your task is to:
+    1. Review the research findings
+    2. Extract the most important information that directly answers the query
+    3. Present the answer in a clear, straightforward manner
+    4. Be concise - get to the point quickly
+    5. Only include essential details, avoid fluff or filler content
+    
+    DO NOT write lengthy explanations unless specifically asked for details.
+    Focus on answering the specific question asked, not providing comprehensive background.
+    
+  expected_output: >
+    A direct, concise answer that:
+    - Answers the user's question in 1-3 sentences if possible
+    - Includes only the most relevant facts or details
+    - Mentions key sources for credibility (just publication name, not full citations)
+    - Avoids unnecessary background information or verbose explanations
+    - Gets straight to the point
+    
+    Target length: 50-150 words maximum unless the query specifically asks for detailed analysis.
+    
+  agent: summarizer

@@ -1,0 +1,35 @@
+{
+  "scripts": {
+    "us_1234567890_demo": {
+      "id": "us_1234567890_demo",
+      "metadata": {
+        "name": "Hello Example",
+        "description": "Demo userscript that logs a message on example.com",
+        "version": "1.0",
+        "author": "AI Browser Assistant",
+        "matches": ["https://example.com/*", "http://example.com/*"],
+        "runAt": "document_end"
+      },
+      "source": "// ==UserScript==\n// @name         Hello Example\n// @description  Demo userscript that logs a message on example.com\n// @version      1.0\n// @author       AI Browser Assistant\n// @match        https://example.com/*\n// @match        http://example.com/*\n// @run-at       document-end\n// @grant        none\n// ==/UserScript==\n\nconsole.log('[Hello Example] Userscript is running!');\nconsole.log('[Hello Example] Current URL:', window.location.href);\nconsole.log('[Hello Example] Page title:', document.title);\n\n// Add a small notification to the page\nconst notification = document.createElement('div');\nnotification.textContent = 'Hello from userscript!';\nnotification.style.cssText = `\n  position: fixed;\n  top: 20px;\n  right: 20px;\n  background: #4CAF50;\n  color: white;\n  padding: 10px 20px;\n  border-radius: 5px;\n  font-family: Arial, sans-serif;\n  font-size: 14px;\n  z-index: 9999;\n  cursor: pointer;\n`;\n\ndocument.body.appendChild(notification);\n\n// Remove notification after 5 seconds or on click\nsetTimeout(() => {\n  if (notification.parentNode) {\n    notification.remove();\n  }\n}, 5000);\n\nnotification.addEventListener('click', () => {\n  notification.remove();\n});",
+      "enabled": true,
+      "createdAt": 1700000000000,
+      "updatedAt": 1700000000000
+    },
+    "us_1234567891_github": {
+      "id": "us_1234567891_github",
+      "metadata": {
+        "name": "GitHub Enhancer",
+        "description": "Adds useful features to GitHub pages",
+        "version": "1.0",
+        "author": "AI Browser Assistant",
+        "matches": ["https://github.com/*"],
+        "runAt": "document_end"
+      },
+      "source": "// ==UserScript==\n// @name         GitHub Enhancer\n// @description  Adds useful features to GitHub pages\n// @version      1.0\n// @author       AI Browser Assistant\n// @match        https://github.com/*\n// @run-at       document-end\n// @grant        none\n// ==/UserScript==\n\nconsole.log('[GitHub Enhancer] Userscript loaded on:', window.location.href);\n\n// Add a quick copy button to code blocks\nfunction addCopyButtons() {\n  const codeBlocks = document.querySelectorAll('pre');\n  \n  codeBlocks.forEach((pre, index) => {\n    // Skip if already has a copy button\n    if (pre.querySelector('.userscript-copy-btn')) return;\n    \n    const copyBtn = document.createElement('button');\n    copyBtn.className = 'userscript-copy-btn';\n    copyBtn.textContent = 'Copy';\n    copyBtn.style.cssText = `\n      position: absolute;\n      top: 8px;\n      right: 8px;\n      padding: 4px 8px;\n      background: #238636;\n      color: white;\n      border: none;\n      border-radius: 4px;\n      font-size: 12px;\n      cursor: pointer;\n      z-index: 10;\n    `;\n    \n    // Make pre position relative if not already\n    if (getComputedStyle(pre).position === 'static') {\n      pre.style.position = 'relative';\n    }\n    \n    copyBtn.addEventListener('click', async () => {\n      const code = pre.textContent || '';\n      try {\n        await navigator.clipboard.writeText(code);\n        copyBtn.textContent = 'Copied!';\n        copyBtn.style.background = '#1a7f37';\n        \n        setTimeout(() => {\n          copyBtn.textContent = 'Copy';\n          copyBtn.style.background = '#238636';\n        }, 2000);\n      } catch (err) {\n        console.error('[GitHub Enhancer] Failed to copy:', err);\n        copyBtn.textContent = 'Failed';\n        copyBtn.style.background = '#da3633';\n      }\n    });\n    \n    pre.appendChild(copyBtn);\n  });\n  \n  console.log(`[GitHub Enhancer] Added copy buttons to ${codeBlocks.length} code blocks`);\n}\n\n// Run on page load and when content changes\naddCopyButtons();\n\n// Watch for dynamic content changes\nconst observer = new MutationObserver(() => {\n  addCopyButtons();\n});\n\nobserver.observe(document.body, {\n  childList: true,\n  subtree: true\n});\n\nconsole.log('[GitHub Enhancer] Initialized successfully');",
+      "enabled": true,
+      "createdAt": 1700000001000,
+      "updatedAt": 1700000001000
+    }
+  },
+  "version": 1
+} 

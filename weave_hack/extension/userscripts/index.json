@@ -1,0 +1,22 @@
+{
+  "generated": "2025-07-13T16:57:11.779Z",
+  "scripts": [
+    {
+      "id": "us_1234567890_demo",
+      "name": "Hello Example",
+      "enabled": true,
+      "matches": [
+        "https://example.com/*",
+        "http://example.com/*"
+      ]
+    },
+    {
+      "id": "us_1234567891_github",
+      "name": "GitHub Enhancer",
+      "enabled": true,
+      "matches": [
+        "https://github.com/*"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,24 @@
+[project]
+name = "vibrowse"
+version = "0.1.0"
+description = "vibrowse using crewAI"
+authors = [{ name = "Your Name", email = "you@example.com" }]
+requires-python = ">=3.10,<3.14"
+dependencies = [
+    "crewai[tools]>=0.141.0,<1.0.0",
+    "exa-py>=1.14.16",
+]
+
+[project.scripts]
+vibrowse = "vibrowse.main:run"
+run_crew = "vibrowse.main:run"
+train = "vibrowse.main:train"
+replay = "vibrowse.main:replay"
+test = "vibrowse.main:test"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.crewai]
+type = "crew"
